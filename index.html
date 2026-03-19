@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAMP | Student Achievement Tracker</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <header>
+            <div class="brand">
+                <h1>CHAMP <span>Tracker</span></h1>
+            </div>
+
+            <nav class="top-navbar">
+                <a class="nav-link active" data-tab="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </a>
+                <a class="nav-link" data-tab="home">
+                    <i class="fas fa-list-ul"></i>
+                    <span>Achievements</span>
+                </a>
+                <a class="nav-link" data-tab="bin">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Bin</span>
+                    <span id="bin-count" class="badge">0</span>
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Overview Section (Default Home) -->
+            <section id="overview-section" class="tab-section">
+                <div class="hero-stats">
+                    <div class="main-points-card">
+                        <span class="label">Total Points</span>
+                        <span id="total-points" class="points">0</span>
+                    </div>
+                    <div class="overview-stats" style="grid-template-columns: 1fr;">
+                        <div class="mini-stat">
+                            <i class="fas fa-medal"></i>
+                            <span id="stat-total-count" class="val">0</span>
+                            <span class="lbl">Total Achievements</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid" style="margin-top: 2rem;">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-layer-group"></i> Achievement Levels</h3>
+                        <div id="level-stats" class="stats-list"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-ranking-star"></i> Positions</h3>
+                        <div id="position-stats" class="stats-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements (List) Section -->
+            <section id="home-section" class="tab-section hidden">
+                <div style="text-align: right; margin-bottom: 2rem;">
+                    <button id="btn-add-main" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add Achievement
+                    </button>
+                </div>
+                <div id="achievements-container" class="cards-grid"></div>
+            </section>
+
+            <!-- Bin Section -->
+            <section id="bin-section" class="tab-section hidden">
+                <h2 style="margin-bottom: 2rem; color: var(--text-dim)">Recycle Bin</h2>
+                <div id="bin-container" class="cards-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--primary-color)">New Achievement</h2>
+                <button id="btn-close-modal" style="background:none; border:none; color:var(--primary-color); font-size:1.5rem; cursor:pointer">&times;</button>
+            </div>
+            <form id="achievement-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="name" placeholder="Achievement name..." required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="category" placeholder="E.g. Sports, Academics" required>
+                </div>
+                <div style="display:flex; gap:1rem">
+                    <div class="form-group" style="flex:1">
+                        <label>Mode</label>
+                        <select id="type">
+                            <option value="offline">Offline</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Level</label>
+                        <select id="level"></select>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem">
+                    <div class="form-group" style="flex:1">
+                        <label>Position</label>
+                        <select id="position">
+                            <option value="1st">1st Place</option>
+                            <option value="2nd">2nd Place</option>
+                            <option value="3rd">3rd Place</option>
+                            <option value="Participation">Participation</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+                <div id="points-preview" style="text-align:center; padding:1rem; background:rgba(62,44,35,0.05); border-radius:1rem; margin:1.5rem 0; color:var(--primary-color); font-weight:900; border: 1px dashed var(--border-color)">
+                    Points: <span id="estimated-points">20</span>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Save to Tracker</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" style="position:fixed; bottom:2rem; right:2rem; z-index:9999; display:flex; flex-direction:column; gap:0.5rem;"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
