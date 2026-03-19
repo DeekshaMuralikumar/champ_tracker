@@ -152,7 +152,6 @@ function sync() {
 function renderAll() {
     const total = achievements.reduce((s, a) => s + a.points, 0);
     dom.totalPoints.textContent = total;
-    dom.binCount.textContent = deletedAchievements.length;
 
     renderCards(achievements, dom.containers.home, false);
     renderCards(deletedAchievements, dom.containers.bin, true);
@@ -196,14 +195,12 @@ function renderOverview() {
     
     document.getElementById('stat-total-count').textContent = count;
 
-    const levels = ['School', 'District', 'State', 'National'];
+    const levels = ['School', 'Basic', 'District', 'State', 'National'];
     dom.containers.levelStats.innerHTML = levels.map(l => {
         const c = achievements.filter(a => a.level === l).length;
-        const p = count ? (c / count) * 100 : 0;
         return `
-            <div class="progress-row">
-                <div class="progress-info"><span>${l}</span><span>${c}</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width: ${p}%"></div></div>
+            <div class="progress-row" style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <div class="progress-info" style="margin-bottom: 0;"><span>${l}</span><span style="color: var(--primary-color); font-size: 1.1rem;">${c}</span></div>
             </div>
         `;
     }).join('');
@@ -211,11 +208,9 @@ function renderOverview() {
     const positions = ['1st', '2nd', '3rd', 'Participation'];
     dom.containers.positionStats.innerHTML = positions.map(pos => {
         const c = achievements.filter(a => a.position === pos).length;
-        const p = count ? (c / count) * 100 : 0;
         return `
-            <div class="progress-row">
-                <div class="progress-info"><span>${pos}</span><span>${c}</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width: ${p}%"></div></div>
+            <div class="progress-row" style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <div class="progress-info" style="margin-bottom: 0;"><span>${pos}</span><span style="color: var(--primary-color); font-size: 1.1rem;">${c}</span></div>
             </div>
         `;
     }).join('');
